@@ -5,14 +5,35 @@ import sun.security.krb5.Config;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.instrument.Instrumentation;
 
 /**
  * Hello world!
  */
 public class App {
+
+    public static String time(long start) {
+        long end = System.currentTimeMillis();
+        sn(start);
+        sn(end);
+        long nanoSeconds = end - start;
+        long seconds = nanoSeconds/(long)Math.pow(10, 3);
+        long minutes = seconds / (60);
+        long actualSeconds = seconds % 60;
+        long hours = minutes / 60;
+        long actualMinutes = minutes % 60;
+        return hours + ":" + actualMinutes + ":" + actualSeconds + "::" + nanoSeconds;
+    }
+
+    public static void sn(Object o) {
+        System.out.println(o);
+    }
+
     public static void main(String[] args) throws IOException {
         ConfigLoader configLoader = new ConfigLoader();
-        configLoader.load("/users/vdua/desktop/test.conf", null);
+        long startTime = System.currentTimeMillis();
+        configLoader.load(args[0], null);
+        sn(time(startTime));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str = "";
         do {
