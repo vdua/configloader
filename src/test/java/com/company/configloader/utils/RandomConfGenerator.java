@@ -33,9 +33,6 @@ public class RandomConfGenerator {
                 }
                 strings.add(str);
             }
-            for (int i = 4; i <= 10; i++) {
-                System.out.println(String.format("%d %d%%", i, (stringSizes[i]*100)/size ));
-            }
             return strings;
         }
     }
@@ -45,8 +42,6 @@ public class RandomConfGenerator {
         FileWriter fw = new FileWriter(f);
         int group = 0, property = -1;
         StringGenerator stringGenerator = new StringGenerator();
-        List<String> propertyNames = stringGenerator.generate(2 * (lines - (lines*groupsPercentage) / 100));
-        List<String> groupNames = stringGenerator.generate(2 * lines * groupsPercentage/100);
         for (int i = 0; i < lines; i++) {
             int randomNumber = (int) (Math.random() * 100);
             if ( randomNumber < groupsPercentage) {
@@ -56,12 +51,7 @@ public class RandomConfGenerator {
                 }
                 group++;
                 property = 0;
-                int randomGroupNumber = (int) (Math.random() * groupNames.size());
-                if (groupNames.size() == 0) {
-                    System.out.println("groups extinguished");
-                    continue;
-                }
-                String randomGroup = groupNames.remove(randomGroupNumber);
+                String randomGroup = stringGenerator.generate(1).remove(0);
                 fw.write(String.format("[%s]%n", randomGroup));
             } else {
                 if (group == 0) {
@@ -69,12 +59,7 @@ public class RandomConfGenerator {
                     continue;
                 }
                 property++;
-                int randomPropertyNumber = (int) (Math.random() * propertyNames.size());
-                if (propertyNames.size() == 0) {
-                    System.out.println("properties extinguished");
-                    continue;
-                }
-                String randomProperty = propertyNames.remove(randomPropertyNumber);
+                String randomProperty = stringGenerator.generate(1).remove(0);
                 fw.write(String.format("%s = %1$s%n", randomProperty));
             }
         }
@@ -83,6 +68,6 @@ public class RandomConfGenerator {
     }
 
     public static void main(String a[]) throws IOException {
-        RandomConfGenerator.generateConfFile("/users/vdua/Desktop/abc.conf",1000000, 5);
+        RandomConfGenerator.generateConfFile("/users/vdua/Desktop/abc.conf",10000000, 5);
     }
 }
