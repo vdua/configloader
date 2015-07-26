@@ -1,5 +1,6 @@
 package com.company.configloader;
 
+import com.company.configloader.ex.InvalidPropertyException;
 import sun.security.krb5.Config;
 
 import java.io.BufferedReader;
@@ -29,10 +30,9 @@ public class App {
         System.out.println(o);
     }
 
-    public static void main(String[] args) throws IOException {
-        ConfigLoader configLoader = new ConfigLoader();
+    public static void main(String[] args) throws IOException, InvalidPropertyException, InterruptedException {
         long startTime = System.currentTimeMillis();
-        configLoader.load(args[0], null);
+        ConfigLoader configLoader = ConfigLoader.load(args[0], new String[]{"staging", "ubuntu"});
         sn(time(startTime));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str = "";

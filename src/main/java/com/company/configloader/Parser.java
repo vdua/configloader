@@ -25,6 +25,11 @@ public class Parser {
         }
     }
 
+    public boolean isGroup(String line) {
+        line = line.trim();
+        return line.length() > 0 && line.charAt(0) == '[';
+    }
+
     public Object parseLine(String line){
         line = line.trim();
         if (line.length() == 0 || line.charAt(0) == ';') {
