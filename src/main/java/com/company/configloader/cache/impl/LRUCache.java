@@ -48,4 +48,9 @@ public class LRUCache implements Cache {
     public void put(String key, Object obj) {
         hashMap.put(key, obj);
     }
+
+    @Override
+    public boolean containsKey(String key) {
+        return hashMap.containsKey(key);
+    }
 }

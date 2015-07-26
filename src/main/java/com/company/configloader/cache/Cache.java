@@ -8,4 +8,6 @@ public interface Cache {
     public Object get(String key);
 
     public void put(String key, Object obj);
+
+    public boolean containsKey(String key);
 }

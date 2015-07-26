@@ -39,7 +39,9 @@ public class RandomConfGenerator {
 
     public static void generateConfFile(String str, int lines, double groupsPercentage, double commentsPercentage) throws IOException {
         File f = new File(str);
+        File g = new File(str+".group");
         FileWriter fw = new FileWriter(f);
+        FileWriter fw2 = new FileWriter(g);
         int group = 0, property = -1, comment = 0;
         StringGenerator stringGenerator = new StringGenerator();
         int propertyTotal = 0, groupSizeMax = 0, groupSizeMin = lines;
@@ -58,6 +60,7 @@ public class RandomConfGenerator {
                 property = 0;
                 String randomGroup = stringGenerator.generate(1).remove(0);
                 fw.write(String.format("[%s]%n", randomGroup));
+                fw2.write(String.format("[%s]%n", randomGroup));
             } else if (randomNumber < (groupsPercentage + commentsPercentage) * lines / 100) {
                 comment++;
                 int randomCommentSize = (int) (Math.random() * 80);
@@ -83,9 +86,10 @@ public class RandomConfGenerator {
         System.out.println(String.format("max group size = %d", groupSizeMax));
         System.out.println(String.format("min group size = %d", groupSizeMin));
         fw.close();
+        fw2.close();
     }
 
     public static void main(String a[]) throws IOException {
-        RandomConfGenerator.generateConfFile("/users/vdua/Desktop/abc.conf", 10000000, 0.001, 80.0);
+        RandomConfGenerator.generateConfFile("/users/vdua/Desktop/abc1.conf", 10000000, 0.005, 80.0);
     }
 }
